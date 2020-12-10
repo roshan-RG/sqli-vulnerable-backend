@@ -1,20 +1,12 @@
-import MySQLRespository from "../news/infraestructure/MySQLRespository.js"
 import GetNew from "../news/application/GetNew.js"
 export default class NewsController {
-    constructor() {
-        const dbConfig = {
-            host: "localhost",
-            user: "root",
-            password: "root",
-            database: "sqli",
-        }
-        const repository = new MySQLRespository(dbConfig)
+    constructor(repository) {
+        
         this.NewsSearcher = new GetNew(repository)
 
     }
     // constructor()
     async run(req, res) {
-
         try {
             const article = await this.NewsSearcher.run(req.query.id)
             res.status(200).send(article.json())

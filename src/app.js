@@ -3,7 +3,8 @@ import express, {Router} from "express"
 import cors from "cors"
 import registerRoutes from "./routes/index.js"
 import NewsController from "./controllers/NewsGetController.js"
-
+import LoginController from "./controllers/LoginController.js"
+import MySQLRespository from "./news/infraestructure/MySQLRespository.js"
 
 const app = express()
 
@@ -24,9 +25,18 @@ const router = Router()
 
 app.use(router)
 
-const newsController = new NewsController()
+const dbConfig = {
+    host: "localhost",
+    user: "root",
+    password: "root",
+    database: "sqli",
+}
+const repository = new MySQLRespository(dbConfig)
 
-registerRoutes(router, newsController)
+const newsController = new NewsController(repository)
+const loginController = new LoginController(repository)
+
+registerRoutes(router, newsController, loginController)
 
 export default app
 
