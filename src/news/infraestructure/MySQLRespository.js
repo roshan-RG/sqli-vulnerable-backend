@@ -26,6 +26,5 @@ export default class MySQLRespository {
         const result = await this.connection.query(`select * from users where Email='${email}' and Password='${password}'`)
         if(result[0].length < 1) return false
         return result[0][0]
-        // return (email === "juan@test.com" && password === "juan1234")
     }
 }
