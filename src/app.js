@@ -6,6 +6,8 @@ import NewsController from "./controllers/NewsGetController.js"
 import LoginController from "./controllers/LoginController.js"
 import MySQLRespository from "./news/infraestructure/MySQLRespository.js"
 
+import config from "./config/index.js"
+
 const app = express()
 
 app.set("port", process.env.PORT || 8080)
@@ -26,10 +28,10 @@ const router = Router()
 app.use(router)
 
 const dbConfig = {
-    host: "localhost",
-    user: "root",
-    password: "root",
-    database: "sqli",
+    host: config.MYSQL_HOST,
+    user: config.MYSQL_USER,
+    password: config.MYSQL_PASSWORD,
+    database: config.MYSQL_DATABASE
 }
 const repository = new MySQLRespository(dbConfig)
 

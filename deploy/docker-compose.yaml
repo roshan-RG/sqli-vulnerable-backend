@@ -6,6 +6,10 @@ services:
     restart: always
     environment:
       PORT: 8080
+      MYSQL_HOST: deploy_db_1
+      MYSQL_USER: user
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: sqli
     ports:
        - '8080:8080'
   db:
@@ -32,3 +36,8 @@ services:
 # Names our volume
 volumes:
   my-db:
+
+networks:
+  default:
+    external:
+      name: sqli-net
