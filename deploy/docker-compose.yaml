@@ -1,25 +1,33 @@
 version: '3.3'
 
 services:
+  backend:
+    image: sqli-backend:latest
+    restart: always
+    environment:
+      PORT: 8080
+    ports:
+       - '8080:8080'
   db:
     image: mysql:latest
     restart: always
     environment:
-      MYSQL_DATABASE: 'sqli'
+      MYSQL_DATABASE: sqli
       # So you don't have to use root, but you can if you like
-      MYSQL_USER: 'root'
+      MYSQL_USER: user
       # You can use whatever password you like
-      MYSQL_PASSWORD: 'root'
+      MYSQL_PASSWORD: root
       # Password for root access
-      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_ROOT_PASSWORD: root
     ports:
       # <Port exposed> : < MySQL Port running inside container>
-      - '3306:3306'
+      - 3306:3306
     expose:
       # Opens port 3306 on the container
       - '3306'
       # Where our data will be persisted
     volumes:
+      - ./scripts/data.sql:/docker-entrypoint-initdb.d/data.sql
       - my-db:/var/lib/mysql
 # Names our volume
 volumes:
